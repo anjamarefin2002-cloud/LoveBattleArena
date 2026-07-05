@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Love Battle Arena</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="menu">
+
+  <h1>💖 Love Battle Arena 💖</h1>
+
+  <input
+    id="playerName"
+    type="text"
+    placeholder="Enter Your Name"
+  >
+
+  <br><br>
+
+  <button onclick="createRoom()">
+    Create Room
+  </button>
+
+  <br><br>
+
+  <input
+    id="roomCode"
+    type="text"
+    placeholder="Room Code"
+  >
+
+  <br><br>
+
+  <button onclick="joinRoom()">
+    Join Room
+  </button>
+
+</div>
+
+<div id="game">
+
+  <div id="topBar">
+
+    <div>
+      ❤️ HP:
+      <span id="hp">100</span>
+    </div>
+
+    <div>
+      🔫 Kills:
+      <span id="kills">0</span>
+    </div>
+
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+</div>
+
+<script src="player.js"></script>
+<script src="controls.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="game.js"></script>
+
+</body>
+</html>

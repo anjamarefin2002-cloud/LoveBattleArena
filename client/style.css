@@ -1,0 +1,41 @@
+body{
+  margin:0;
+  background:#111;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+
+#menu{
+  margin-top:100px;
+}
+
+input{
+  padding:12px;
+  width:250px;
+  font-size:18px;
+}
+
+button{
+  padding:12px 25px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+#game{
+  display:none;
+}
+
+#topBar{
+  display:flex;
+  justify-content:space-around;
+  padding:15px;
+  font-size:22px;
+}
+
+canvas{
+  background:#222;
+  border:2px solid white;
+  width:90%;
+  height:500px;
+}

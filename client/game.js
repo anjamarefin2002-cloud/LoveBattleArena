@@ -1,0 +1,265 @@
+let room = "";
+let socket =
+io();
+
+let canvas;
+let ctx;
+
+function createRoom() {
+
+  room = Math.random()
+    .toString(36)
+    .substring(2, 7)
+    .toUpperCase();
+
+  alert("Room Code : " + room);
+
+  startGame();
+}
+
+function joinRoom() {
+
+  const code =
+    document.getElementById(
+      "roomCode"
+    ).value;
+
+  if (code === "") {
+    return;
+  }
+
+  room = code;
+
+  startGame();
+}
+
+function startGame() {
+
+  document.getElementById(
+    "menu"
+  ).style.display = "none";
+
+  document.getElementById(
+    "game"
+  ).style.display = "block";
+socket.emit(
+  "join-room",
+  room
+);
+
+socket.on(
+  "players",
+  (count) => {
+
+    if (
+      count === 2
+    ) {
+
+      alert(
+        "🎉 Both Players Connected"
+      );
+
+    }
+
+  }
+);
+
+  canvas =
+    document.getElementById(
+      "canvas"
+    );
+
+  ctx =
+    canvas.getContext("2d");
+
+  canvas.width = 1000;
+  canvas.height = 500;
+
+  requestAnimationFrame(loop);
+}
+
+function loop() {
+
+  update();
+
+  draw();
+
+  requestAnimationFrame(loop);
+}
+
+function update() {
+
+  player.dx = 0;
+
+  if (keys["a"]) {
+    player.dx =
+      -player.speed;
+  }
+
+  if (keys["d"]) {
+    player.dx =
+      player.speed;
+  }
+
+  if (
+    keys["w"] &&
+    player.onGround
+  ) {
+    player.dy =
+      player.jumpPower;
+
+    player.onGround =
+      false;
+  }
+
+  player.dy +=
+    player.gravity;
+
+  player.x +=
+    player.dx;
+
+  player.y +=
+    player.dy;
+
+  if (
+    player.y +
+      player.height >=
+    canvas.height
+  ) {
+
+    player.y =
+      canvas.height -
+      player.height;
+
+    player.dy = 0;
+
+    player.onGround =
+      true;
+  }
+for (
+  let i = bullets.length - 1;
+  i >= 0;
+  i--
+) {
+
+  let b = bullets[i];
+
+  b.x += b.speed;
+
+  if (
+    b.x >
+    canvas.width
+  ) {
+    bullets.splice(i, 1);
+    continue;
+  }
+
+  if (
+    b.x <
+      enemy.x +
+        enemy.width &&
+    b.x + b.width >
+      enemy.x &&
+    b.y <
+      enemy.y +
+        enemy.height &&
+    b.y + b.height >
+      enemy.y
+  ) {
+
+    enemy.hp -= 20;
+
+    bullets.splice(i, 1);
+
+    if (
+      enemy.hp <= 0
+    ) {
+
+      player.kills++;
+
+      enemy.hp = 100;
+
+      enemy.x = 800;
+      enemy.y = 300;
+
+      document.getElementById(
+        "kills"
+      ).innerText =
+        player.kills;
+
+      if (
+        player.kills >=
+        10
+      ) {
+
+        alert(
+          "🏆 Winner : Ananda"
+        );
+
+      }
+
+    }
+
+  }
+
+}
+}
+
+function draw() {
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.fillStyle =
+    "deepskyblue";
+
+  ctx.fillRect(
+    player.x,
+    player.y,
+    player.width,
+    player.height
+  );
+ctx.fillStyle = "crimson";
+
+ctx.fillRect(
+  enemy.x,
+  enemy.y,
+  enemy.width,
+  enemy.height
+);
+
+ctx.fillStyle = "gold";
+
+for (let b of bullets) {
+  ctx.fillRect(
+    b.x,
+    b.y,
+    b.width,
+    b.height
+  );
+}
+}
+function shoot() {
+
+  bullets.push({
+
+    x:
+      player.x +
+      player.width,
+
+    y:
+      player.y +
+      15,
+
+    width: 15,
+    height: 6,
+
+    speed: 10
+
+  });
+
+}
