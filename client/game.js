@@ -136,6 +136,14 @@ function update() {
     player.onGround =
       true;
   }
+socket.emit(
+  "player-move",
+  {
+    room: room,
+    x: player.x,
+    y: player.y
+  }
+);
 for (
   let i = bullets.length - 1;
   i >= 0;
@@ -168,37 +176,55 @@ for (
   ) {
 
     enemy.hp -= 20;
+document.getElementById(
+  "hp"
+).innerText =
+enemy.hp;
 
     bullets.splice(i, 1);
 
-    if (
-      enemy.hp <= 0
-    ) {
+  if (
+  enemy.hp <= 0
+) {
 
-      player.kills++;
+  player.kills++;
 
-      enemy.hp = 100;
+  document.getElementById(
+    "kills"
+  ).innerText =
+    player.kills;
 
-      enemy.x = 800;
-      enemy.y = 300;
-
-      document.getElementById(
-        "kills"
-      ).innerText =
-        player.kills;
-
-      if (
-        player.kills >=
-        10
-      ) {
-
-        alert(
-          "🏆 Winner : Ananda"
-        );
-
-      }
-
+  socket.emit(
+    "player-kill",
+    {
+      room: room,
+      kills:
+        player.kills
     }
+  );
+
+  enemy.hp = 100;
+
+  document.getElementById(
+    "hp"
+  ).innerText = 100;
+
+  enemy.x =
+    Math.random() * 800;
+
+  enemy.y = 300;
+
+  if (
+    player.kills >= 10
+  ) {
+
+    alert(
+      "🏆 Winner : Ananda"
+    );
+
+  }
+
+}
 
   }
 
@@ -245,7 +271,7 @@ for (let b of bullets) {
 }
 function shoot() {
 
-  bullets.push({
+  let bullet = {
 
     x:
       player.x +
@@ -260,6 +286,67 @@ function shoot() {
 
     speed: 10
 
-  });
+  };
+
+  bullets.push(
+    bullet
+  );
+
+  socket.emit(
+    "shoot",
+    {
+      room: room,
+      bullet: bullet
+    }
+  );
 
 }
+
+socket.on(
+  "enemy-shoot",
+  (data) => {
+
+    bullets.push(
+      data.bullet
+    );
+
+  }
+);
+socket.on(
+  "enemy-kill",
+  (data) => {
+
+    enemy.kills =
+      data.kills;
+
+    if (
+      enemy.kills >= 10
+    ) {
+
+      alert(
+        "🏆 Winner : Jarin"
+      );
+
+    }
+
+  }
+);
+socket.on(
+  "enemy-kill",
+  (data) => {
+
+    enemy.kills =
+      data.kills;
+
+    if (
+      enemy.kills >= 10
+    ) {
+
+      alert(
+        "🏆 Winner : Jarin"
+      );
+
+    }
+
+  }
+);

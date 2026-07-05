@@ -55,6 +55,48 @@ io.on(
 
       }
     );
+socket.on(
+  "player-move",
+  (data) => {
+
+    socket
+      .to(data.room)
+      .emit(
+        "enemy-move",
+        {
+          x: data.x,
+          y: data.y
+        }
+      );
+
+  }
+);
+socket.on(
+  "shoot",
+  (data) => {
+
+    socket
+      .to(data.room)
+      .emit(
+        "enemy-shoot",
+        data
+      );
+
+  }
+);
+socket.on(
+  "player-kill",
+  (data) => {
+
+    socket
+      .to(data.room)
+      .emit(
+        "enemy-kill",
+        data
+      );
+
+  }
+);
 
   }
 );
