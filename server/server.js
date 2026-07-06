@@ -100,51 +100,53 @@ socket.on(
   }
 );
 socket.on(
-  "player-kill",
-  (data) => {
+"player-kill",
+(data)=>{
 
     socket
-      .to(data.room)
-      .emit(
+    .to(data.room)
+    .emit(
         "enemy-kill",
         data
-      );
+    );
+
+});
+
 socket.on(
-  "disconnect",
-  () => {
+"disconnect",
+()=>{
 
     for(let room in rooms){
 
-      rooms[room]=
-      rooms[room].filter(
+        rooms[room]=
+        rooms[room].filter(
 
-        p=>p.id!=socket.id
+            p=>p.id!=socket.id
 
-      );
+        );
 
-      io.to(room).emit(
+        io.to(room).emit(
 
-        "players",
+            "players",
 
-        rooms[room]
+            rooms[room]
 
-      );
+        );
 
-      if(
+        if(
 
-        rooms[room].length==0
+            rooms[room].length==0
 
-      ){
+        ){
 
-        delete rooms[room];
+            delete rooms[room];
 
-      }
+        }
 
     }
 
-  }
-);
-
+});
+    
   }
 );
 
