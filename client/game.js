@@ -11,30 +11,65 @@ let ctx;
 
 function createRoom() {
 
-  room = Math.random()
-    .toString(36)
-    .substring(2, 7)
-    .toUpperCase();
+  myName =
+  document.getElementById(
+    "playerName"
+  ).value.trim();
 
-  alert("Room Code : " + room);
+  if(myName==""){
+
+    alert("Enter Your Name");
+
+    return;
+
+  }
+
+  room =
+  Math.random()
+  .toString(36)
+  .substring(2,7)
+  .toUpperCase();
+
+  alert(
+    "Room Code : " + room
+  );
 
   startGame();
+
 }
 
-function joinRoom() {
+function joinRoom(){
+
+  myName =
+  document.getElementById(
+    "playerName"
+  ).value.trim();
+
+  if(myName==""){
+
+    alert("Enter Your Name");
+
+    return;
+
+  }
 
   const code =
-    document.getElementById(
-      "roomCode"
-    ).value;
+  document.getElementById(
+    "roomCode"
+  ).value.trim();
 
-  if (code === "") {
+  if(code==""){
+
+    alert("Enter Room Code");
+
     return;
+
   }
 
   room = code;
 
   startGame();
+
 }
 
 function startGame() {
@@ -107,17 +142,6 @@ document.getElementById(
 "game"
 ).style.display="block";
 
-myName=
-document.getElementById(
-"playerName"
-).value;
-
-if(myName==""){
-
-myName="Player";
-
-}
-
 socket.emit(
 "join-room",
 {
@@ -154,6 +178,19 @@ function loop() {
   update();
 
   draw();
+console.log(
+  "Game Started"
+);
+
+console.log(
+  "Room:",
+  room
+);
+
+console.log(
+  "Player:",
+  myName
+);
 
   requestAnimationFrame(loop);
 }
