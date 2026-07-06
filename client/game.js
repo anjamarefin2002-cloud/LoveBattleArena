@@ -46,16 +46,6 @@ function startGame() {
   document.getElementById(
     "game"
   ).style.display = "block";
-socket.on(
-  "match-start",
-  () => {
-
-    alert(
-      "🎮 Match Started!"
-    );
-
-  }
-);
 
 socket.emit(
   "join-room",
@@ -101,19 +91,7 @@ socket.on(
 
   }
 );
-    if (
-      count === 2
-    ) {
-
-      alert(
-        "🎉 Both Players Connected"
-      );
-
-    }
-
-  }
-);
-
+    
   canvas =
     document.getElementById(
       "canvas"
@@ -125,7 +103,11 @@ socket.on(
   canvas.width = 1000;
   canvas.height = 500;
 
-myName =
+document.getElementById(
+"game"
+).style.display="block";
+
+myName=
 document.getElementById(
 "playerName"
 ).value;
@@ -135,6 +117,13 @@ if(myName==""){
 myName="Player";
 
 }
+
+socket.emit(
+"join-room",
+{
+room:room,
+name:myName
+});
   requestAnimationFrame(loop);
 timerInterval =
 setInterval(() => {
@@ -490,7 +479,11 @@ document
     location.reload();
 
   };
+socket.on(
+"match-start",
+()=>{
 
-alert(
-  "Waiting for opponent..."
-);
+alert("🎮 Match Started!");
+
+});
+
