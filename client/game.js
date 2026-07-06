@@ -1,4 +1,6 @@
 let room = "";
+let matchTime = 300;
+let timerInterval;
 let socket =
 io();
 
@@ -76,6 +78,28 @@ socket.on(
   canvas.height = 500;
 
   requestAnimationFrame(loop);
+timerInterval =
+setInterval(() => {
+
+  matchTime--;
+
+  document.getElementById(
+    "timer"
+  ).innerText =
+    matchTime;
+
+  if (
+    matchTime <= 0
+  ) {
+
+    clearInterval(
+      timerInterval
+    );
+
+    endMatch();
+  }
+
+}, 1000);
 }
 
 function loop() {
@@ -350,3 +374,34 @@ socket.on(
 
   }
 );
+
+function endMatch() {
+
+  let winner =
+    player.kills >
+    enemy.kills
+      ? "Ananda"
+      : "Jarin";
+
+  alert(
+    "🏆 Match Over\nWinner : " +
+      winner
+  );
+
+  document.getElementById(
+    "restartBtn"
+  ).style.display =
+    "inline-block";
+
+}
+
+document
+  .getElementById(
+    "restartBtn"
+  )
+  .onclick =
+  function () {
+
+    location.reload();
+
+  };
