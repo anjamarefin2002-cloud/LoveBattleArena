@@ -59,6 +59,14 @@ io.on(
 
     );
 
+if (rooms[data.room].length == 2) {
+
+    io.to(data.room).emit(
+        "match-start"
+    );
+
+}
+
   }
 );
 

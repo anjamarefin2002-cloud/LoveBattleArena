@@ -46,6 +46,17 @@ function startGame() {
   document.getElementById(
     "game"
   ).style.display = "block";
+socket.on(
+  "match-start",
+  () => {
+
+    alert(
+      "🎮 Match Started!"
+    );
+
+  }
+);
+
 socket.emit(
   "join-room",
   {
@@ -479,3 +490,7 @@ document
     location.reload();
 
   };
+
+alert(
+  "Waiting for opponent..."
+);
