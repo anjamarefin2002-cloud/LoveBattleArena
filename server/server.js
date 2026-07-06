@@ -147,11 +147,6 @@ socket.on(
 
 });
     
-  }
-);
-
-  }
-);
 
 server.listen(
   3000,
