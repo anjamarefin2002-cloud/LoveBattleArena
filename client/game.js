@@ -357,6 +357,24 @@ ctx.fillRect(
   enemy.height
 );
 
+if (enemyName == "Waiting...") {
+
+    ctx.fillStyle = "yellow";
+
+    ctx.font = "20px Arial";
+
+    ctx.fillText(
+
+        "Waiting for Player...",
+
+        350,
+
+        40
+
+    );
+
+}
+
 ctx.fillStyle = "gold";
 
 for (let b of bullets) {
@@ -408,25 +426,6 @@ socket.on(
     bullets.push(
       data.bullet
     );
-
-  }
-);
-socket.on(
-  "enemy-kill",
-  (data) => {
-
-    enemy.kills =
-      data.kills;
-
-    if (
-      enemy.kills >= 10
-    ) {
-
-      alert(
-        "🏆 Winner : Jarin"
-      );
-
-    }
 
   }
 );

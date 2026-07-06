@@ -62,10 +62,6 @@ io.on(
   }
 );
 
-        socket.join(room);
-     socket.playerName=
-"Player";
-
         if (
           !rooms[room]
         ) {
@@ -126,6 +122,41 @@ socket.on(
         "enemy-kill",
         data
       );
+socket.on(
+  "disconnect",
+  () => {
+
+    for(let room in rooms){
+
+      rooms[room]=
+      rooms[room].filter(
+
+        p=>p.id!=socket.id
+
+      );
+
+      io.to(room).emit(
+
+        "players",
+
+        rooms[room]
+
+      );
+
+      if(
+
+        rooms[room].length==0
+
+      ){
+
+        delete rooms[room];
+
+      }
+
+    }
+
+  }
+);
 
   }
 );
