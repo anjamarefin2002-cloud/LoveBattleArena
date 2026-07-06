@@ -468,6 +468,14 @@ function shoot() {
 }
 
 socket.on(
+"enemy-move",
+(data)=>{
+
+    enemy.x = data.x;
+    enemy.y = data.y;
+
+});
+socket.on(
   "enemy-shoot",
   (data) => {
 
