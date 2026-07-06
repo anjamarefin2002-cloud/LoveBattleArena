@@ -48,13 +48,48 @@ function startGame() {
   ).style.display = "block";
 socket.emit(
   "join-room",
-  room
+  {
+
+    room: room,
+
+    name: myName
+
+  }
 );
 
 socket.on(
   "players",
-  (count) => {
+  (players) => {
 
+    if (
+      players.length == 2
+    ) {
+
+      if (
+        players[0].name ==
+        myName
+      ) {
+
+        enemyName =
+          players[1].name;
+
+      } else {
+
+        enemyName =
+          players[0].name;
+
+      }
+
+      alert(
+        "🎉 " +
+        enemyName +
+        " Joined!"
+      );
+
+    }
+
+  }
+);
     if (
       count === 2
     ) {

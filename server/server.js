@@ -29,8 +29,38 @@ io.on(
   (socket) => {
 
     socket.on(
-      "join-room",
-      (room) => {
+  "join-room",
+  (data) => {
+
+    socket.join(data.room);
+
+    socket.playerName =
+      data.name;
+
+    if (!rooms[data.room]) {
+
+      rooms[data.room] = [];
+
+    }
+
+    rooms[data.room].push({
+
+      id: socket.id,
+
+      name: data.name
+
+    });
+
+    io.to(data.room).emit(
+
+      "players",
+
+      rooms[data.room]
+
+    );
+
+  }
+);
 
         socket.join(room);
      socket.playerName=
