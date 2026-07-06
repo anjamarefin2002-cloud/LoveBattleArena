@@ -103,6 +103,19 @@ socket.on(
 
   }
 );
+
+socket.on(
+  "hit-player",
+  (data)=>{
+
+    socket
+      .to(data.room)
+      .emit(
+        "player-hit"
+      );
+
+  }
+);
 socket.on(
 "player-kill",
 (data)=>{

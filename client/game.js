@@ -274,10 +274,19 @@ for (
   ) {
 
     enemy.hp -= 20;
+socket.emit("hit-player",{
+    room:room
+});
 document.getElementById(
   "hp"
 ).innerText =
 enemy.hp;
+socket.emit(
+  "hit-player",
+  {
+    room: room
+  }
+);
 
     bullets.splice(i, 1);
 
@@ -457,14 +466,11 @@ function shoot() {
     bullet
   );
 
-  socket.emit(
-    "shoot",
-    {
-      room: room,
-      bullet: bullet
-    }
-  );
-
+  socket.emit("shoot", {
+    room: room,
+    x: player.x + player.width,
+    y: player.y + 15
+});
 }
 
 socket.on(
@@ -475,16 +481,25 @@ socket.on(
     enemy.y = data.y;
 
 });
-socket.on(
-  "enemy-shoot",
-  (data) => {
+socket.on("enemy-shoot",(data)=>{
 
-    bullets.push(
-      data.bullet
-    );
+    let bullet={
 
-  }
-);
+        x:data.x,
+
+        y:data.y,
+
+        width:15,
+
+        height:6,
+
+        speed:-10
+
+    };
+
+    bullets.push(bullet);
+
+});
 socket.on(
   "enemy-kill",
   (data) => {
@@ -499,6 +514,32 @@ socket.on(
       alert(
         "🏆 Winner : Jarin"
       );
+
+    }
+
+  }
+);
+
+socket.on(
+  "player-hit",
+  ()=>{
+
+    player.hp -= 20;
+
+    document.getElementById(
+      "hp"
+    ).innerText = player.hp;
+
+    if(player.hp <= 0){
+
+      player.hp = 100;
+
+      document.getElementById(
+        "hp"
+      ).innerText = 100;
+
+      player.x = 100;
+      player.y = 300;
 
     }
 
