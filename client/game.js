@@ -138,16 +138,6 @@ socket.on(
   canvas.width = 1000;
   canvas.height = 500;
 
-document.getElementById(
-"game"
-).style.display="block";
-
-socket.emit(
-"join-room",
-{
-room:room,
-name:myName
-});
   requestAnimationFrame(loop);
 timerInterval =
 setInterval(() => {
@@ -385,15 +375,36 @@ enemy.x,
 enemy.y-10
 
 );
-ctx.fillStyle = "crimson";
+if(enemyName!="Enemy"){
 
-ctx.fillRect(
-  enemy.x,
-  enemy.y,
-  enemy.width,
-  enemy.height
+ctx.fillStyle="white";
+ctx.font="18px Arial";
+ctx.fillText(
+enemyName,
+enemy.x,
+enemy.y-10
 );
 
+ctx.fillStyle="crimson";
+ctx.fillRect(
+enemy.x,
+enemy.y,
+enemy.width,
+enemy.height
+);
+
+}
+else{
+
+ctx.fillStyle="yellow";
+ctx.font="20px Arial";
+ctx.fillText(
+"Waiting for Player...",
+350,
+40
+);
+
+}
 if (enemyName == "Waiting...") {
 
     ctx.fillStyle = "yellow";

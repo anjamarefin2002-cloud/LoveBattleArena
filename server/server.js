@@ -42,6 +42,10 @@ io.on(
       rooms[data.room] = [];
 
     }
+rooms[data.room] =
+rooms[data.room].filter(
+p => p.id !== socket.id
+);
 
     rooms[data.room].push({
 
