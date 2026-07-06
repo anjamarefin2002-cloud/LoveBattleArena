@@ -1,4 +1,6 @@
 let room = "";
+let myName="";
+let enemyName="Enemy";
 let matchTime = 300;
 let timerInterval;
 let socket =
@@ -77,6 +79,16 @@ socket.on(
   canvas.width = 1000;
   canvas.height = 500;
 
+myName =
+document.getElementById(
+"playerName"
+).value;
+
+if(myName==""){
+
+myName="Player";
+
+}
   requestAnimationFrame(loop);
 timerInterval =
 setInterval(() => {
@@ -264,6 +276,20 @@ function draw() {
     canvas.height
   );
 
+ctx.fillStyle="white";
+
+ctx.font="18px Arial";
+
+ctx.fillText(
+
+myName,
+
+player.x,
+
+player.y-10
+
+);
+
   ctx.fillStyle =
     "deepskyblue";
 
@@ -273,6 +299,20 @@ function draw() {
     player.width,
     player.height
   );
+
+ctx.fillStyle="white";
+
+ctx.font="18px Arial";
+
+ctx.fillText(
+
+enemyName,
+
+enemy.x,
+
+enemy.y-10
+
+);
 ctx.fillStyle = "crimson";
 
 ctx.fillRect(

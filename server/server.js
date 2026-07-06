@@ -33,6 +33,8 @@ io.on(
       (room) => {
 
         socket.join(room);
+     socket.playerName=
+"Player";
 
         if (
           !rooms[room]
