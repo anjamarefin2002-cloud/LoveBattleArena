@@ -70,27 +70,6 @@ if (rooms[data.room].length == 2) {
   }
 );
 
-        if (
-          !rooms[room]
-        ) {
-          rooms[room] =
-            [];
-        }
-
-        rooms[room]
-          .push(
-            socket.id
-          );
-
-        io.to(room)
-          .emit(
-            "players",
-            rooms[room]
-              .length
-          );
-
-      }
-    );
 socket.on(
   "player-move",
   (data) => {
